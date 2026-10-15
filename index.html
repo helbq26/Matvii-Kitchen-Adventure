@@ -2,21 +2,55 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>МАТВІЙ: КУХНЯ ПРОТИ ВСІХ! — Deluxe 2.0</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#171127">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>МАТВІЙ: КУХНЯ ПРОТИ ВСІХ! — Deluxe 2.1 Mobile</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-game-mode="title">
   <main class="wrap">
-    <header><span class="chip">16-BIT КУХОННА ПРИГОДА</span><h1>🍳 МАТВІЙ: КУХНЯ ПРОТИ ВСІХ!</h1><p>DELUXE 2.0 · 5 рівнів · секрети · фінальний бос</p></header>
-    <div class="cabinet">
-      <canvas id="game" width="960" height="540" tabindex="0" aria-label="Гра Матвій: Кухня проти всіх"></canvas>
+    <header>
+      <span class="chip">16-BIT КУХОННА ПРИГОДА</span>
+      <h1>🍳 МАТВІЙ: КУХНЯ ПРОТИ ВСІХ!</h1>
+      <p>DELUXE 2.1 · 5 рівнів · секрети · комп'ютер і телефон</p>
+    </header>
+
+    <div class="mobile-bar" aria-live="polite">
+      <span id="mobile-level">МАТВІЙ: КУХНЯ ПРОТИ ВСІХ!</span>
+      <strong id="mobile-progress">🎮 5 рівнів</strong>
+    </div>
+    <div class="game-layout">
+      <div class="cabinet" id="cabinet">
+        <canvas id="game" width="960" height="540" tabindex="0" aria-label="Матвій: Кухня проти всіх, ігрове поле"></canvas>
+      </div>
+
+      <div class="touch-panel" id="touch-panel" aria-label="Сенсорне керування">
+        <div class="touch-left" aria-label="Напрямок руху">
+          <button type="button" class="touch-key direction" data-key="ArrowLeft" aria-label="Рух ліворуч"><span>◀</span></button>
+          <button type="button" class="touch-key direction" data-key="ArrowRight" aria-label="Рух праворуч"><span>▶</span></button>
+        </div>
+        <div class="touch-right" aria-label="Дії">
+          <button type="button" class="touch-key jump" data-key="Space" aria-label="Стрибок"><span>⬆</span><small>СТРИБОК</small></button>
+          <button type="button" class="touch-key attack" data-key="KeyJ" aria-label="Атака лопаткою"><span>⚔</span><small>УДАР</small></button>
+          <button type="button" class="touch-key interact" data-key="KeyE" aria-label="Активувати важіль"><span>✋</span><small>ДІЯ</small></button>
+          <button type="button" class="touch-key pause" data-key="KeyP" aria-label="Пауза або продовжити"><span>Ⅱ</span><small>ПАУЗА</small></button>
+        </div>
+        <div class="touch-menu">
+          <button type="button" class="touch-small" id="touch-start" data-key="Enter">▶ ГРАТИ</button>
+          <button type="button" class="touch-small" id="touch-continue" data-key="KeyC" hidden>↩ ПРОДОВЖИТИ</button>
+          <button type="button" class="touch-small" id="touch-fullscreen">⛶ НА ВЕСЬ ЕКРАН</button>
+          <button type="button" class="touch-small" data-key="KeyM">♫ ЗВУК</button>
+        </div>
+      </div>
     </div>
     <div class="controls"><span>← → / A D <b>рух</b></span><span>ПРОБІЛ <b>стрибок</b></span><span>J <b>лопатка</b></span><span>E <b>важіль</b></span><span>P <b>пауза</b></span><span>R <b>перезапуск</b></span><span>M <b>звук</b></span></div>
-    <p class="hint">Грай з клавіатури. Натисни Enter для старту. Гра повністю автономна: інтернет і встановлення програм не потрібні.</p>
-    <footer>Зроблено спеціально для Матвія ✦ Розроблено як невеликий навчальний проєкт</footer>
+    <p class="hint">На телефоні використовуй кнопки під грою. Поверни телефон для широкого поля. У книжковій орієнтації камера збільшує героя. Гра працює без інтернету після завантаження файлів.</p>
+    <footer>Зроблено спеціально для Матвія ✦ Кухонна пригода 2.1</footer>
   </main>
   <script src="art.js"></script>
+  <script src="mobile.js"></script>
   <script src="game.js"></script>
 </body>
 </html>

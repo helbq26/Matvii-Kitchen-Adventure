@@ -6,10 +6,95 @@ header{text-align:center;margin-bottom:18px}
 h1{font-size:clamp(21px,3.4vw,38px);margin:9px 0;color:#ffe46e;text-shadow:3px 4px #8d3181;letter-spacing:1px}
 header p{margin:0;color:#cec5e2;font-size:13px}
 .chip{font:bold 11px monospace;background:#fa5c78;color:#231027;border-radius:5px;padding:6px 10px;letter-spacing:2px}
-.cabinet{background:#211a3d;border:7px solid #6757a2;box-shadow:0 14px 0 #0b0a18,0 28px 48px #070411aa;border-radius:15px;overflow:hidden}
+.game-layout{position:relative}
+.cabinet{position:relative;background:#211a3d;border:7px solid #6757a2;box-shadow:0 14px 0 #0b0a18,0 28px 48px #070411aa;border-radius:15px;overflow:hidden}
 canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#17112e;image-rendering:pixelated;outline:none}
 .controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
 .controls span{border:1px solid #6e5e94;border-bottom-width:3px;border-radius:7px;padding:9px 11px;font:700 12px monospace;color:#ffe17e;background:#2a2248}
 .controls b{color:#f1e9ff;font-size:11px}
 .hint{text-align:center;color:#c3b8d8;font-size:12px;line-height:1.6}
 footer{text-align:center;color:#8e86a8;font-size:11px;margin-top:18px}
+.mobile-bar,.touch-panel{display:none}
+button{font-family:inherit;cursor:pointer}
+[hidden]{display:none!important}
+
+@media (pointer:coarse), (max-width:680px) {
+  html{overscroll-behavior:none}
+  body{background:#19132e}
+  .wrap{padding:0 0 env(safe-area-inset-bottom,0px);max-width:none}
+  header,.controls,footer{display:none}
+  .hint{font-size:11px;padding:0 14px 6px;margin:7px 0;color:#bdb0d3}
+  .mobile-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:9px 13px;background:#35234d;color:#ffe694;border-bottom:2px solid #75568b;
+    font:900 clamp(12px,3vw,16px) monospace;min-height:42px}
+  .mobile-bar strong{white-space:nowrap;color:#fff4d3;font-size:clamp(11px,2.7vw,15px)}
+  .game-layout{width:100%}
+  .cabinet{border:3px solid #7353a8;border-radius:0;box-shadow:none;width:100%}
+  #game{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+  .touch-panel{display:grid;grid-template-columns:minmax(125px,42%) minmax(155px,58%);
+    grid-template-areas:"left right" "menu menu";gap:8px;
+    background:linear-gradient(180deg,#2b2044,#19152f);padding:12px 12px 10px;
+    touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+  .touch-left{grid-area:left;display:flex;align-items:center;justify-content:center;gap:9px}
+  .touch-right{grid-area:right;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,66px);gap:7px}
+  .touch-menu{grid-area:menu;display:flex;gap:6px;justify-content:space-between}
+  .touch-key{touch-action:none;appearance:none;border:3px solid #d3b7ec;border-bottom-width:6px;
+    color:#fff9e9;background:#72559e;border-radius:15px;min-width:0;min-height:58px;
+    font-weight:900;display:flex;align-items:center;justify-content:center;gap:3px;
+    flex-direction:column;-webkit-tap-highlight-color:transparent;box-shadow:0 3px 0 #191229}
+  .touch-key span{font-size:25px;line-height:1}
+  .touch-key small{font-size:10px;letter-spacing:.4px}
+  .direction{height:76px;flex:1;max-width:78px;background:#5a4d87}
+  .direction span{font-size:31px}
+  .jump{background:#349d9d;border-color:#a8ffee}
+  .attack{background:#c45879;border-color:#ffc1d3}
+  .interact{background:#b58744;border-color:#ffe5ac}
+  .pause{background:#645c8d;border-color:#bbb3ea}
+  .touch-key:active,.touch-key.is-down{transform:translateY(3px);border-bottom-width:3px;filter:brightness(1.23)}
+  .touch-small{touch-action:manipulation;border:1px solid #75609e;border-radius:8px;background:#3c315d;
+    color:#ffefb2;font:900 clamp(10px,2.7vw,14px) monospace;padding:10px 8px;flex:1}
+  .touch-small:active{background:#8366a7}
+  body[data-game-mode="playing"] #touch-start,body[data-game-mode="playing"] #touch-continue,
+  body[data-game-mode="pause"] #touch-start,body[data-game-mode="pause"] #touch-continue{display:none!important}
+}
+@media (pointer:coarse) and (orientation:portrait), (max-width:680px) and (orientation:portrait) {
+  /* Portrait: camera-follow crop magnifies gameplay instead of squashing 960px into 390px. */
+  body[data-game-mode="playing"] .cabinet,
+  body[data-game-mode="pause"] .cabinet{height:calc(100vw * 540 / 610);max-height:52dvh}
+  body[data-game-mode="playing"] #game,body[data-game-mode="pause"] #game{
+    position:absolute;top:0;left:0;width:calc(100vw * 960 / 610);max-width:none;height:auto}
+  /* When title/menu is open, show the whole game canvas so its text and play prompt fit. */
+  body[data-game-mode="title"] #game,body[data-game-mode="victory"] #game{width:100%;height:auto}
+  .touch-panel{padding-bottom:11px}
+  .touch-menu{flex-wrap:wrap}
+  .touch-small{min-width:80px}
+}
+@media (pointer:coarse) and (orientation:landscape), (max-width:680px) and (orientation:landscape) {
+  html,body{height:100%;overflow:hidden}
+  .wrap{height:100dvh;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) 5px env(safe-area-inset-bottom,0px)}
+  .mobile-bar,.hint{display:none}
+  .game-layout{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+  /* Leave side space for large buttons; no controls cover the game character. */
+  .cabinet{flex:0 1 auto;width:min(calc((100dvh - 9px) * 16 / 9),calc(100vw - 350px));
+    min-width:0;border:2px solid #6b4e9b;border-radius:9px}
+  #game{width:100%;height:auto}
+  .touch-panel{display:contents}
+  .touch-left{position:absolute;left:0;top:32%;width:min(112px,14vw);gap:4px;z-index:2}
+  .touch-right{position:absolute;right:0;top:15%;width:min(170px,22vw);grid-template-rows:repeat(2,min(69px,22dvh));gap:5px;z-index:2}
+  .direction{height:min(79px,26dvh);min-height:48px}
+  .touch-key{min-height:45px;border-width:2px;border-bottom-width:4px;border-radius:11px}
+  .touch-key span{font-size:20px}
+  .touch-key small{font-size:9px}
+  .touch-menu{position:absolute;left:2px;right:2px;bottom:2px;justify-content:center;pointer-events:none;gap:4px}
+  .touch-small{pointer-events:auto;max-width:140px;flex:0 1 auto;background:#34264cce;padding:5px 8px;font-size:10px}
+  .touch-small[data-key="KeyM"]{display:none}
+  .hint{display:none}
+}
+@media (display-mode:fullscreen) {
+  body{background:#171127}
+  .wrap{max-width:100%;padding-top:0}
+  .cabinet{box-shadow:none}
+}
+@media (pointer:fine) and (min-width:681px) {
+  .mobile-bar,.touch-panel{display:none}
+}

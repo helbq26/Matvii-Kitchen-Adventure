@@ -626,6 +626,7 @@ function overlay(kind) {
   }
 }
 function render() {
+  if(window.MatviiMobile)window.MatviiMobile.update({mode,stageIndex,hero,stage,score});
   if(mode==="title"){titleScreen();return;}
   c.save();
   if(shake>0) c.translate(Math.sin(tick*6)*shake*.37,Math.cos(tick*4)*shake*.25);
